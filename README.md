@@ -62,79 +62,78 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 ```
 </details>
 <details>
-<summary>$p=10^{27}+103$,&nbsp; found by <a href="https://math.mit.edu/~drew">Andrew V. Sutherland</a> using the PARI/GP script oneshot.gp (in this repo) written by Opus 4.8 Max.</summary>
+<summary>$p=10^{27}+103$,&nbsp; found by <a href="https://math.mit.edu/~drew">Andrew V. Sutherland</a> using the PARI/GP script <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a> (in this repo) written by Opus 4.8 Max.</summary>
 ```
 1000000000000000000000000103 312974950995669069013171476 172593690963274141822396662 47457808262928
 ```
 </details>
 <details>
-<summary>$p=10^{28}+331$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{28}+331$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 10000000000000000000000000331 5031886505302109097801972542 7590928722467341482534178255 194302826514512
 ```
 </details>
 <details>
-<summary>$p=10^{29}+319$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{29}+319$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 100000000000000000000000000319 31468179295053009742907022163 23123902402618461989178154439 817737156034785
 ```
 </details>
 <details>
-<summary>$p=10^{30}+57$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{30}+57$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 1000000000000000000000000000057 591125717966793476109128213529 197460379572716956878681609455 1173640639212828
 ```
 </details>
 <details>
-<summary>$p=10^{31}+33$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{31}+33$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 10000000000000000000000000000033 4690496079817252168145416687138 8220783064519615672372426718373 5240076766482500
 ```
 </details>
 <details>
-<summary>$p=10^{32}+49$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{32}+49$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 100000000000000000000000000000049 18309249303903019832153244036329 85322474575401452391277964228530 13614910363181120
 ```
 </details>
 <details>
-<summary>$p=10^{33}+61$,&nbsp; via oneshot.gp..</summary>
+<summary>$p=10^{33}+61$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 1000000000000000000000000000000061 648192400153952751799649675566254 429346140800532487176183128471515 60036892806592588
 ```
 </details>
 <details>
-<summary>$p=10^{34}+193$,&nbsp; via oneshot.gp.</summary>
-```
+<summary>$p=10^{34}+193$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 10000000000000000000000000000000193 2594753449944574831102996807476719 6733173628454929111267082029383756 169943089227918080
 ```
 </details>
 <details>
-<summary>$p=10^{35}+69$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{35}+69$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 100000000000000000000000000000000069 93977100671481669191332747972651177 52101934975675178822779890741815362 382471270587522580
 ```
 </details>
 <details>
-<summary>$p=10^{36}+67$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{36}+67$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 1000000000000000000000000000000000067 353080590237600292016249222126744754 473830482386688141513982236889280987 1182690518354585184
 ```
 </details>
 <details>
-<summary>$p=10^{37}+43$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{37}+43$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 10000000000000000000000000000000000043 2717297970637349065380416672384095184 4511737206111955351917332049377553718 3739337326854726564
 ```
 </details>
 <details>
-<summary>$p=10^{38}+133$,&nbsp; via oneshot.gp.</summary>
+<summary>$p=10^{38}+133$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a>.</summary>
 ```
 100000000000000000000000000000000000133 70845294891976403444554278469676530455 87917117948218547290408848541807294166 12239686139389993376
 ```
 </details>
 <details>
-<summary>$p=10^{39}+3$,&nbsp; via oneshot.gp (about 4 CPU minutes).</summary>
+<summary>$p=10^{39}+3$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a> (about 4 CPU minutes).</summary>
 ```
 1000000000000000000000000000000000000003 122886961756874115892864204812888757733 840437353385309934285823630402884859950 35709281381466792384
 ```
