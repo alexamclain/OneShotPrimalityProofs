@@ -7,7 +7,7 @@ candidate is accepted only after ``voneshot.verify(p, A, x0, m)`` succeeds.
 
 Typical use:
 
-    python3 parallel_search_oneshot.py 40 --workers 8 --seed 20260628 \
+    python3 parallel_search_oneshot.py 40 --workers 10 --seed 20260628 \
         --log-file search-40.jsonl --result-file cert-40.txt
 
 Each worker is a separate process with its own PARI instance and random seed.
