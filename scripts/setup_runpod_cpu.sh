@@ -14,11 +14,14 @@ fi
 
 if command -v apt-get >/dev/null 2>&1; then
   $SUDO apt-get update
+  PARI_PACKAGES=(libpari-dev pari-gp)
+  if apt-cache show pari-seadata >/dev/null 2>&1; then
+    PARI_PACKAGES+=(pari-seadata)
+  fi
   $SUDO env DEBIAN_FRONTEND=noninteractive apt-get install -y \
     build-essential \
     git \
-    libpari-dev \
-    pari-gp \
+    "${PARI_PACKAGES[@]}" \
     pkg-config \
     python3-dev \
     python3-pip \
@@ -43,7 +46,7 @@ PY
 python3 -m py_compile voneshot.py search_oneshot.py parallel_search_oneshot.py
 python3 voneshot.py --test
 python3 parallel_search_oneshot.py --prime 101 \
-  --workers 2 \
+  --workers 10 \
   --seed 1 \
   --batch-size 1 \
   --max-curves-per-worker 8 \
@@ -57,7 +60,7 @@ RunPod CPU setup complete.
 Example search:
   mkdir -p search_runs
   python3 parallel_search_oneshot.py 45 \
-    --workers "$(nproc)" \
+    --workers 10 \
     --seed 202606280601 \
     --batch-size 8 \
     --report-every 500 \

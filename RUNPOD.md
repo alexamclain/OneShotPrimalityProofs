@@ -23,18 +23,19 @@ git pull --ff-only
 bash scripts/setup_runpod_cpu.sh
 ```
 
-The setup script installs system PARI dependencies, installs `cypari2`, and
-runs small smoke tests against `voneshot.py` and `parallel_search_oneshot.py`.
+The setup script installs system PARI dependencies, including PARI `seadata`
+when the package is available, installs `cypari2`, and runs small smoke tests
+against `voneshot.py` and `parallel_search_oneshot.py`.
 
 ## Running A Search
 
-Use one independent process per available CPU thread/core, but keep PARI itself
-single-threaded. The driver does this by default with `--pari-threads 1`.
+Use 10 independent processes per pod, but keep PARI itself single-threaded. The
+driver does this by default with `--pari-threads 1`.
 
 ```bash
 mkdir -p search_runs
 python3 parallel_search_oneshot.py 45 \
-  --workers "$(nproc)" \
+  --workers 10 \
   --seed 202606280601 \
   --batch-size 8 \
   --report-every 500 \
