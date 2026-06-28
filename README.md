@@ -139,6 +139,12 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 1000000000000000000000000000000000000003 122886961756874115892864204812888757733 840437353385309934285823630402884859950 35709281381466792384
 ```
 </details>
+<details>
+<summary>$p=10^{40}+121$,&nbsp; found by <a href="https://www.alexamclain.com/">Alexa McLain</a> using GPT 5.5 - Extra High with <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/main/parallel_search_oneshot.py">parallel_search_oneshot.py</a> in this repo (8 workers; under 1 CPU minute for the successful parallel run, after an earlier ~10 CPU-minute single-worker attempt).</summary>
+```
+10000000000000000000000000000000000000121 159417335712131629150530624126527065617 6380001157648721637516633150027366007494 105540040423836213192
+```
+</details>
 
 Contributors (both human and AI) are welcome to submit pull requests to this repo, provided they follow the guidelines below:
 - new entries should be the least prime greater than a power of 10 larger than any currently listed;
