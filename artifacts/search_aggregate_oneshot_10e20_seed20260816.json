@@ -1,0 +1,33 @@
+{
+  "accepted_points": 2,
+  "bitlength": 67,
+  "curves_tested": 6,
+  "elapsed_seconds": 1.2173465840000002,
+  "gap": 39,
+  "one_shot_bound_bits": 33.21930980263017,
+  "p": 100000000000000000039,
+  "points": [
+    {
+      "A": 66116240990825451354,
+      "component_order": 100000000009760676896,
+      "component_smooth_bits": 30.501767862604883,
+      "curve_index": 1,
+      "order": 1520362144,
+      "order_bits": 30.501767862604883,
+      "side": "twist",
+      "x": 28252350541764522128
+    },
+    {
+      "A": 78019657103503623604,
+      "component_order": 99999999983151352176,
+      "component_smooth_bits": 23.55877756096022,
+      "curve_index": 6,
+      "order": 6178296,
+      "order_bits": 22.55877756096022,
+      "side": "twist",
+      "x": 59454171776651169873
+    }
+  ],
+  "verified": true,
+  "window_bits": 17.609640474436812
+}
