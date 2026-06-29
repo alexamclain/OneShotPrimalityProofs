@@ -36,16 +36,80 @@ from typing import Any, Dict, Iterable, List, Optional, TextIO, Tuple
 
 SEED_MODULUS = 2**31 - 1
 
-SC_TRY_BATCH = r'''
-sc_try_batch(p, B, bound, batch) = {
-  my(res);
-  for(i = 1, batch,
-    res = sc_try(p, B, bound);
-    if(type(res) == "t_VEC", return([i, res[1], res[2], res[3]]))
+SC_TRY_BATCH_FUNCTIONS = (
+    r'''
+sc_try_order_stats(A, p, N, B, bound, side) = {
+  my(sr = smoothpart(N, B), s = sr[1], r = sr[2], fs, x, Q, T, ord, q, d, fo, Qm);
+  if(s <= bound, return([0, 0, 0, 0]));                  \\ smooth factor too small
+  fs = factor(s)[, 1];
+  for(t = 1, 64,
+    x = sc_random_x_on_side(A, p, side);
+    if(x < 0, next);
+    Q = sc_ladder(r, x, 1, A, p);                         \\ order(Q) divides s
+    if((Q[2] % p) == 0, next);                            \\ Q = O, resample x
+    ord = s;
+    for(i = 1, #fs,
+      q = fs[i];
+      while(ord % q == 0,
+        T = sc_ladder(ord / q, Q[1], Q[2], A, p);
+        if(sc_xisinf(T, p), ord /= q, break)
+      )
+    );
+    if(ord > bound,
+      d = ord; fo = factor(ord)[, 1];                     \\ reduce point to minimal smooth order > bound
+      forstep(jj = #fo, 1, -1, q = fo[jj]; while(d % q == 0 && d / q > bound, d = d / q));
+      Qm = sc_ladder(ord / d, Q[1], Q[2], A, p);          \\ ord(Qm) = d, still > bound, still smooth
+      if((Qm[2] % p) == 0, next);
+      return([2, A, sc_affine_x(Qm, p), d]))
   );
-  0
+  [1, 0, 0, 0];                                           \\ smooth order, but no point extracted
 }
-'''
+''',
+
+    r'''
+sc_try_stats(p, B, bound) = {
+  my(A = random(p), E = ellinit([0, A, 0, 1, 0], p), N, res,
+     curve_smooth = 0, curve_point_fail = 0, twist_smooth = 0, twist_point_fail = 0);
+  if(#E == 0, return([0, 0, 0, 0, 0, 0, 0, 0, 0]));       \\ singular (A == +-2 mod p)
+  N = ellcard(E);
+  res = sc_try_order_stats(A, p, N, B, bound, 1);
+  if(res[1] == 2, return([2, 1, res[2], res[3], res[4], 1, 0, 0, 0]));
+  if(res[1] == 1, curve_smooth = 1);
+  if(res[1] == 1, curve_point_fail = 1);
+  res = sc_try_order_stats(A, p, 2 * p + 2 - N, B, bound, -1);
+  if(res[1] == 2, return([2, -1, res[2], res[3], res[4],
+    curve_smooth, curve_point_fail, 1, 0]));
+  if(res[1] == 1, twist_smooth = 1);
+  if(res[1] == 1, twist_point_fail = 1);
+  [0, 0, 0, 0, 0, curve_smooth, curve_point_fail, twist_smooth, twist_point_fail];
+}
+''',
+
+    r'''
+sc_try_batch(p, B, bound, batch) = {
+  my(res, curve_smooth = 0, curve_point_fail = 0, twist_smooth = 0, twist_point_fail = 0);
+  for(i = 1, batch,
+    res = sc_try_stats(p, B, bound);
+    curve_smooth += res[6]; curve_point_fail += res[7];
+    twist_smooth += res[8]; twist_point_fail += res[9];
+    if(res[1] == 2, return([i, res[2], res[3], res[4], res[5],
+      curve_smooth, curve_point_fail, twist_smooth, twist_point_fail]))
+  );
+  [0, 0, 0, 0, 0, curve_smooth, curve_point_fail, twist_smooth, twist_point_fail]
+}
+''',
+)
+
+STAGE_STAT_KEYS = (
+    "curve_smooth",
+    "curve_point_fail",
+    "twist_smooth",
+    "twist_point_fail",
+    "curve_success",
+    "twist_success",
+)
+
+BATCH_STAGE_STAT_KEYS = STAGE_STAT_KEYS[:4]
 
 
 @dataclass(frozen=True)
@@ -199,6 +263,36 @@ def write_event(log_file: Optional[TextIO], event: Dict[str, Any]) -> None:
         print(json.dumps(json_ready(event), sort_keys=True), file=log_file, flush=True)
 
 
+def zero_stage_stats() -> Dict[str, int]:
+    return {key: 0 for key in STAGE_STAT_KEYS}
+
+
+def add_stage_stats(stats: Dict[str, int], batch_stats: Iterable[int]) -> None:
+    for key, value in zip(BATCH_STAGE_STAT_KEYS, batch_stats):
+        stats[key] += int(value)
+
+
+def sum_stage_stats(worker_stats: Dict[int, Dict[str, int]]) -> Dict[str, int]:
+    total = zero_stage_stats()
+    for stats in worker_stats.values():
+        for key in STAGE_STAT_KEYS:
+            total[key] += int(stats.get(key, 0))
+    return total
+
+
+def normalize_stage_stats(raw: Optional[Dict[str, Any]]) -> Dict[str, int]:
+    stats = zero_stage_stats()
+    if raw is None:
+        return stats
+    for key in STAGE_STAT_KEYS:
+        stats[key] = int(raw.get(key, 0))
+    return stats
+
+
+def format_stage_stats(stats: Dict[str, int]) -> str:
+    return " ".join(f"{key}={int(stats.get(key, 0))}" for key in STAGE_STAT_KEYS)
+
+
 def open_log(path: Optional[Path]) -> Optional[TextIO]:
     if path is None:
         return None
@@ -274,6 +368,7 @@ def worker_main(config: WorkerConfig, stop_event: mp.Event, event_queue: mp.Queu
     curves = 0
     last_report_curves = 0
     last_report_elapsed = 0.0
+    stats = zero_stage_stats()
 
     try:
         from cypari2 import Pari
@@ -284,7 +379,8 @@ def worker_main(config: WorkerConfig, stop_event: mp.Event, event_queue: mp.Queu
         pari(f"default(nbthreads,{config.pari_threads})")
         pari(f"setrand({config.seed})")
         pari.read(str(Path(config.root) / "oneshot.gp"))
-        pari(SC_TRY_BATCH)
+        for gp_function in SC_TRY_BATCH_FUNCTIONS:
+            pari(gp_function)
 
         put_event(
             event_queue,
@@ -311,15 +407,23 @@ def worker_main(config: WorkerConfig, stop_event: mp.Event, event_queue: mp.Queu
                 f"{config.order_lower_bound}, {batch_size})"
             )
             elapsed = perf_counter() - start
+            if res.type() != "t_VEC" or len(res) != 9:
+                raise RuntimeError(f"sc_try_batch returned unexpected result: {res}")
+            tried_in_batch = int(res[0])
+            side = int(res[1])
+            add_stage_stats(stats, (int(res[5]), int(res[6]), int(res[7]), int(res[8])))
 
-            if res.type() == "t_VEC":
-                tried_in_batch = int(res[0])
+            if tried_in_batch > 0:
                 curves += tried_in_batch
+                if side == 1:
+                    stats["curve_success"] += 1
+                elif side == -1:
+                    stats["twist_success"] += 1
                 cert = (
                     config.p,
-                    int(res[1]),
                     int(res[2]),
                     int(res[3]),
+                    int(res[4]),
                 )
                 verified = bool(verify(*cert))
                 put_event(
@@ -332,6 +436,8 @@ def worker_main(config: WorkerConfig, stop_event: mp.Event, event_queue: mp.Queu
                         "curves": curves,
                         "elapsed_seconds": elapsed,
                         "certificate": cert,
+                        "side": side,
+                        "stats": dict(stats),
                         "verified_in_worker": verified,
                     },
                 )
@@ -356,6 +462,7 @@ def worker_main(config: WorkerConfig, stop_event: mp.Event, event_queue: mp.Queu
                         "curves": curves,
                         "elapsed_seconds": elapsed,
                         "rate": curves / elapsed if elapsed else 0.0,
+                        "stats": dict(stats),
                     },
                 )
                 last_report_curves = curves
@@ -372,6 +479,7 @@ def worker_main(config: WorkerConfig, stop_event: mp.Event, event_queue: mp.Queu
                 "curves": curves,
                 "elapsed_seconds": perf_counter() - start,
                 "reason": reason,
+                "stats": dict(stats),
             },
         )
     except BaseException as exc:  # send traceback to the parent before the process exits
@@ -384,6 +492,7 @@ def worker_main(config: WorkerConfig, stop_event: mp.Event, event_queue: mp.Queu
                 "seed": config.seed,
                 "curves": curves,
                 "elapsed_seconds": perf_counter() - start,
+                "stats": dict(stats),
                 "error": repr(exc),
                 "traceback": traceback.format_exc(),
             },
@@ -418,6 +527,7 @@ def shutdown_workers(processes: Dict[int, mp.Process], stop_event: mp.Event, tim
 
 def print_aggregate(
     worker_curves: Dict[int, int],
+    worker_stats: Dict[int, Dict[str, int]],
     started_workers: int,
     total_workers: int,
     run_start: float,
@@ -428,7 +538,8 @@ def print_aggregate(
     print(
         "tested_curves = "
         f"{total_curves} elapsed_seconds = {elapsed:.3f} "
-        f"rate = {rate:.3f}/s started_workers = {started_workers}/{total_workers}",
+        f"rate = {rate:.3f}/s started_workers = {started_workers}/{total_workers} "
+        f"stage {format_stage_stats(sum_stage_stats(worker_stats))}",
         flush=True,
     )
 
@@ -508,6 +619,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
 
         run_start = perf_counter()
         worker_curves = {worker_id: 0 for worker_id in processes}
+        worker_stats = {worker_id: zero_stage_stats() for worker_id in processes}
         finished_workers = set()
         noted_exits = set()
         errors: List[Dict[str, Any]] = []
@@ -552,9 +664,11 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                     )
                 elif event_type == "progress":
                     worker_curves[worker_id] = int(event["curves"])
-                    print_aggregate(worker_curves, started_workers, args.workers, run_start)
+                    worker_stats[worker_id] = normalize_stage_stats(event.get("stats"))
+                    print_aggregate(worker_curves, worker_stats, started_workers, args.workers, run_start)
                 elif event_type == "candidate":
                     worker_curves[worker_id] = int(event["curves"])
+                    worker_stats[worker_id] = normalize_stage_stats(event.get("stats"))
                     cert_tuple = tuple(int(x) for x in event["certificate"])
                     if len(cert_tuple) != 4:
                         errors.append(event)
@@ -569,8 +683,9 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                     if parent_verified:
                         verified_cert = cert
                         print("certificate = " + " ".join(str(x) for x in cert), flush=True)
+                        print(f"side = {event.get('side')}", flush=True)
                         print(f"verified = {parent_verified}", flush=True)
-                        print_aggregate(worker_curves, started_workers, args.workers, run_start)
+                        print_aggregate(worker_curves, worker_stats, started_workers, args.workers, run_start)
                         if args.result_file is not None:
                             write_certificate(args.result_file, cert)
                         stop_event.set()
@@ -579,6 +694,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                         print(f"worker {worker_id} returned an unverified candidate; continuing", flush=True)
                 elif event_type == "worker_stopped":
                     worker_curves[worker_id] = int(event["curves"])
+                    worker_stats[worker_id] = normalize_stage_stats(event.get("stats"))
                     finished_workers.add(worker_id)
                     print(
                         f"worker {worker_id} stopped reason={event['reason']} curves={event['curves']}",
@@ -586,6 +702,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                     )
                 elif event_type == "worker_error":
                     worker_curves[worker_id] = int(event.get("curves", 0))
+                    worker_stats[worker_id] = normalize_stage_stats(event.get("stats"))
                     finished_workers.add(worker_id)
                     errors.append(event)
                     print(
@@ -612,6 +729,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                     "status": "found",
                     "certificate": verified_cert,
                     "total_curves": sum(worker_curves.values()),
+                    "stats": sum_stage_stats(worker_stats),
                 },
             )
             return 0
@@ -623,10 +741,11 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                 "type": "run_finished",
                 "status": status,
                 "total_curves": sum(worker_curves.values()),
+                "stats": sum_stage_stats(worker_stats),
                 "errors": errors,
             },
         )
-        print_aggregate(worker_curves, started_workers, args.workers, run_start)
+        print_aggregate(worker_curves, worker_stats, started_workers, args.workers, run_start)
         print(f"no verified certificate found ({status})", flush=True)
         return 2 if errors else 1
     finally:
