@@ -189,7 +189,7 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 ```
 </details>
 <details>
-<summary>$p=10^{48}+193$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> using GPT 5.5 - Extra High with <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/main/parallel_search_oneshot.py">parallel_search_oneshot.py</a> in this repo (10 workers; 59,309 curves; about 4.3 wall hours / 43 CPU-hours).</summary>
+<summary>$p=10^{48}+193$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> using GPT 5.5 - Extra High with <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/main/parallel_search_oneshot.py">parallel_search_oneshot.py</a> in this repo (10 workers; certificate emitted after about 3.1 wall hours / 31 CPU-hours; run log closed at 59,309 aggregate curves and about 4.3 wall hours).</summary>
 ```
 1000000000000000000000000000000000000000000000193 756629692972229602491961804298556859655820911395 918593905186155312035948211710330034366751932565 1606109062327986974770608
 ```
