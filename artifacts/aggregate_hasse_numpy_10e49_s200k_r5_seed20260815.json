@@ -1,0 +1,780 @@
+{
+  "panels": [
+    {
+      "panel": {
+        "aggregate_hits": 5,
+        "aggregate_max_hit": 1934,
+        "aggregate_median_hit": 1486,
+        "aggregate_min_hit": 775,
+        "one_shot_hits": 0,
+        "repetitions": 5,
+        "samples": 200000
+      },
+      "runs": [
+        {
+          "accepted_candidates": [
+            {
+              "new_lcm_bits": 52.81412994508902,
+              "prime_count": 5,
+              "sea_count": 1,
+              "side": "curve",
+              "smooth_bits": 52.81412994508902,
+              "smooth_part": 7918397664380071,
+              "surplus_gain_bits": 10.120510782718974
+            },
+            {
+              "new_lcm_bits": 96.44008080286626,
+              "prime_count": 6,
+              "sea_count": 29,
+              "side": "twist",
+              "smooth_bits": 43.62595085777724,
+              "smooth_part": 13574373590193,
+              "surplus_gain_bits": 0.9323316954071927
+            },
+            {
+              "new_lcm_bits": 146.426024660998,
+              "prime_count": 7,
+              "sea_count": 148,
+              "side": "curve",
+              "smooth_bits": 49.985943858131726,
+              "smooth_part": 1114983557293118,
+              "surplus_gain_bits": 7.292324695761685
+            },
+            {
+              "new_lcm_bits": 192.83963691169777,
+              "prime_count": 6,
+              "sea_count": 251,
+              "side": "twist",
+              "smooth_bits": 46.4136122506998,
+              "smooth_part": 93732347636735,
+              "surplus_gain_bits": 3.7199930883297228
+            },
+            {
+              "new_lcm_bits": 242.30610276269834,
+              "prime_count": 5,
+              "sea_count": 256,
+              "side": "twist",
+              "smooth_bits": 49.466465851000564,
+              "smooth_part": 777839512649093,
+              "surplus_gain_bits": 6.77284668863053
+            },
+            {
+              "new_lcm_bits": 291.2996201079758,
+              "prime_count": 6,
+              "sea_count": 259,
+              "side": "curve",
+              "smooth_bits": 50.5784798459986,
+              "smooth_part": 1681278149376237,
+              "surplus_gain_bits": 6.299898182907391
+            },
+            {
+              "new_lcm_bits": 335.33309664599335,
+              "prime_count": 8,
+              "sea_count": 287,
+              "side": "curve",
+              "smooth_bits": 53.463929089683106,
+              "smooth_part": 12423568017744900,
+              "surplus_gain_bits": 1.3398573756475187
+            },
+            {
+              "new_lcm_bits": 384.50148527834125,
+              "prime_count": 6,
+              "sea_count": 590,
+              "side": "curve",
+              "smooth_bits": 55.39720732284375,
+              "smooth_part": 47448346242452475,
+              "surplus_gain_bits": 6.474769469977851
+            },
+            {
+              "new_lcm_bits": 431.9428207845752,
+              "prime_count": 4,
+              "sea_count": 604,
+              "side": "curve",
+              "smooth_bits": 47.44133550623397,
+              "smooth_part": 191101907372833,
+              "surplus_gain_bits": 4.7477163438638925
+            },
+            {
+              "new_lcm_bits": 477.3371319799137,
+              "prime_count": 5,
+              "sea_count": 619,
+              "side": "curve",
+              "smooth_bits": 46.97927369605965,
+              "smooth_part": 138730054542621,
+              "surplus_gain_bits": 2.7006920329684547
+            },
+            {
+              "new_lcm_bits": 522.8895170900897,
+              "prime_count": 5,
+              "sea_count": 625,
+              "side": "twist",
+              "smooth_bits": 46.55238511017607,
+              "smooth_part": 103196338372438,
+              "surplus_gain_bits": 2.858765947805985
+            },
+            {
+              "new_lcm_bits": 567.5523643453458,
+              "prime_count": 5,
+              "sea_count": 851,
+              "side": "curve",
+              "smooth_bits": 48.12227887389333,
+              "smooth_part": 306372232153889,
+              "surplus_gain_bits": 1.9692280928860626
+            },
+            {
+              "new_lcm_bits": 620.0019456329243,
+              "prime_count": 6,
+              "sea_count": 867,
+              "side": "twist",
+              "smooth_bits": 54.77150938246585,
+              "smooth_part": 30751565654753395,
+              "surplus_gain_bits": 9.755962125208391
+            },
+            {
+              "new_lcm_bits": 666.0545204965464,
+              "prime_count": 6,
+              "sea_count": 907,
+              "side": "twist",
+              "smooth_bits": 49.63753736434331,
+              "smooth_part": 875765147126952,
+              "surplus_gain_bits": 3.3589557012520643
+            },
+            {
+              "new_lcm_bits": 730.0593996396323,
+              "prime_count": 9,
+              "sea_count": 972,
+              "side": "twist",
+              "smooth_bits": 67.589841643807,
+              "smooth_part": 222110830993862347572,
+              "surplus_gain_bits": 21.311259980715825
+            }
+          ],
+          "aggregate_components": 15,
+          "aggregate_hit_at": 972,
+          "aggregate_lcm_bits": 730.0593996396323,
+          "aggregate_required_surplus_bits": 81.38723832474038,
+          "aggregate_surplus_bits": 89.65511220408155,
+          "best_smooth_bits": 67.589841643807,
+          "elapsed_seconds": 0.023409457877278328,
+          "one_shot_bound_bits": 81.387238324742,
+          "one_shot_hit_at": null,
+          "repetition": 0,
+          "sea_counts": 972,
+          "window_bits": 42.69361916237005
+        },
+        {
+          "accepted_candidates": [
+            {
+              "new_lcm_bits": 45.84783839528773,
+              "prime_count": 7,
+              "sea_count": 1,
+              "side": "curve",
+              "smooth_bits": 45.847838395287724,
+              "smooth_part": 63324911765882,
+              "surplus_gain_bits": 3.154219232917683
+            },
+            {
+              "new_lcm_bits": 89.83436158843338,
+              "prime_count": 5,
+              "sea_count": 42,
+              "side": "twist",
+              "smooth_bits": 43.98652319314565,
+              "smooth_part": 17428615389707,
+              "surplus_gain_bits": 1.2929040307756026
+            },
+            {
+              "new_lcm_bits": 150.58427443252202,
+              "prime_count": 9,
+              "sea_count": 132,
+              "side": "twist",
+              "smooth_bits": 68.47101203279584,
+              "smooth_part": 409099035257568007569,
+              "surplus_gain_bits": 18.056293681718593
+            },
+            {
+              "new_lcm_bits": 197.66987931174612,
+              "prime_count": 6,
+              "sea_count": 278,
+              "side": "curve",
+              "smooth_bits": 49.892959801281705,
+              "smooth_part": 1045387908808075,
+              "surplus_gain_bits": 4.391985716854045
+            },
+            {
+              "new_lcm_bits": 244.4574695544488,
+              "prime_count": 7,
+              "sea_count": 514,
+              "side": "twist",
+              "smooth_bits": 47.78759024270268,
+              "smooth_part": 242939472160618,
+              "surplus_gain_bits": 4.0939710803326435
+            },
+            {
+              "new_lcm_bits": 300.3653110291249,
+              "prime_count": 7,
+              "sea_count": 571,
+              "side": "curve",
+              "smooth_bits": 61.03712449162105,
+              "smooth_part": 2365948685339515045,
+              "surplus_gain_bits": 13.214222312306028
+            },
+            {
+              "new_lcm_bits": 346.0905442795795,
+              "prime_count": 5,
+              "sea_count": 845,
+              "side": "curve",
+              "smooth_bits": 45.72523325045458,
+              "smooth_part": 58165674299189,
+              "surplus_gain_bits": 3.0316140880845595
+            },
+            {
+              "new_lcm_bits": 396.16809307053944,
+              "prime_count": 7,
+              "sea_count": 1136,
+              "side": "curve",
+              "smooth_bits": 65.63916490953156,
+              "smooth_part": 57458929180081940553,
+              "surplus_gain_bits": 7.383929628589904
+            },
+            {
+              "new_lcm_bits": 451.68809553152005,
+              "prime_count": 8,
+              "sea_count": 1534,
+              "side": "curve",
+              "smooth_bits": 64.0822448852017,
+              "smooth_part": 19528905322388865564,
+              "surplus_gain_bits": 12.826383298610558
+            },
+            {
+              "new_lcm_bits": 498.50917328603185,
+              "prime_count": 6,
+              "sea_count": 1613,
+              "side": "twist",
+              "smooth_bits": 50.991002755954135,
+              "smooth_part": 2237800355612946,
+              "surplus_gain_bits": 4.127458592141757
+            },
+            {
+              "new_lcm_bits": 541.7452545520964,
+              "prime_count": 7,
+              "sea_count": 1791,
+              "side": "twist",
+              "smooth_bits": 57.37219124514222,
+              "smooth_part": 186530769465657955,
+              "surplus_gain_bits": 0.5424621036945112
+            },
+            {
+              "new_lcm_bits": 588.2587791784285,
+              "prime_count": 7,
+              "sea_count": 1804,
+              "side": "curve",
+              "smooth_bits": 56.17530272410406,
+              "smooth_part": 81367530514517070,
+              "surplus_gain_bits": 3.8199054639620798
+            },
+            {
+              "new_lcm_bits": 643.513940002611,
+              "prime_count": 7,
+              "sea_count": 1934,
+              "side": "twist",
+              "smooth_bits": 57.84012332490365,
+              "smooth_part": 257995465964400558,
+              "surplus_gain_bits": 12.561541661812392
+            }
+          ],
+          "aggregate_components": 13,
+          "aggregate_hit_at": 1934,
+          "aggregate_lcm_bits": 643.513940002611,
+          "aggregate_required_surplus_bits": 81.38723832474038,
+          "aggregate_surplus_bits": 88.49689089180038,
+          "best_smooth_bits": 68.47101203279584,
+          "elapsed_seconds": 0.042137542041018605,
+          "one_shot_bound_bits": 81.387238324742,
+          "one_shot_hit_at": null,
+          "repetition": 1,
+          "sea_counts": 1934,
+          "window_bits": 42.69361916237005
+        },
+        {
+          "accepted_candidates": [
+            {
+              "new_lcm_bits": 46.553905276886645,
+              "prime_count": 6,
+              "sea_count": 18,
+              "side": "twist",
+              "smooth_bits": 46.553905276886645,
+              "smooth_part": 103305133587441,
+              "surplus_gain_bits": 3.8602861145165974
+            },
+            {
+              "new_lcm_bits": 94.46802449499877,
+              "prime_count": 5,
+              "sea_count": 45,
+              "side": "curve",
+              "smooth_bits": 47.914119218112134,
+              "smooth_part": 265208293147751,
+              "surplus_gain_bits": 5.220500055742079
+            },
+            {
+              "new_lcm_bits": 138.21030131616223,
+              "prime_count": 5,
+              "sea_count": 47,
+              "side": "twist",
+              "smooth_bits": 43.74227682116345,
+              "smooth_part": 14714225308724,
+              "surplus_gain_bits": 1.0486576587934096
+            },
+            {
+              "new_lcm_bits": 183.11923532656618,
+              "prime_count": 6,
+              "sea_count": 160,
+              "side": "twist",
+              "smooth_bits": 46.493896511125115,
+              "smooth_part": 99096305885229,
+              "surplus_gain_bits": 2.2153148480339055
+            },
+            {
+              "new_lcm_bits": 225.9915799985186,
+              "prime_count": 6,
+              "sea_count": 293,
+              "side": "curve",
+              "smooth_bits": 44.45730717267356,
+              "smooth_part": 24153662045499,
+              "surplus_gain_bits": 0.178725509582371
+            },
+            {
+              "new_lcm_bits": 270.72899464338155,
+              "prime_count": 6,
+              "sea_count": 338,
+              "side": "curve",
+              "smooth_bits": 47.544769566920586,
+              "smooth_part": 205306063774889,
+              "surplus_gain_bits": 2.0437954824929037
+            },
+            {
+              "new_lcm_bits": 315.2691648318709,
+              "prime_count": 4,
+              "sea_count": 530,
+              "side": "curve",
+              "smooth_bits": 44.54017018848933,
+              "smooth_part": 25581572597569,
+              "surplus_gain_bits": 1.8465510261193074
+            },
+            {
+              "new_lcm_bits": 379.81915138697076,
+              "prime_count": 8,
+              "sea_count": 545,
+              "side": "twist",
+              "smooth_bits": 66.54998655509985,
+              "smooth_part": 108029449777389058196,
+              "surplus_gain_bits": 21.8563673927298
+            },
+            {
+              "new_lcm_bits": 423.07088766489875,
+              "prime_count": 7,
+              "sea_count": 587,
+              "side": "twist",
+              "smooth_bits": 54.714238550525266,
+              "smooth_part": 29554729826975926,
+              "surplus_gain_bits": 0.5581171155579412
+            },
+            {
+              "new_lcm_bits": 471.28176144889596,
+              "prime_count": 7,
+              "sea_count": 607,
+              "side": "twist",
+              "smooth_bits": 49.21087378399721,
+              "smooth_part": 651552059389610,
+              "surplus_gain_bits": 5.517254621627167
+            },
+            {
+              "new_lcm_bits": 519.5443672789715,
+              "prime_count": 8,
+              "sea_count": 707,
+              "side": "curve",
+              "smooth_bits": 54.654923252854346,
+              "smooth_part": 28364250344144316,
+              "surplus_gain_bits": 5.568986667705538
+            },
+            {
+              "new_lcm_bits": 565.4493111424854,
+              "prime_count": 5,
+              "sea_count": 870,
+              "side": "curve",
+              "smooth_bits": 51.33120861821597,
+              "smooth_part": 2832914763937847,
+              "surplus_gain_bits": 3.2113247011437878
+            },
+            {
+              "new_lcm_bits": 615.9711560949941,
+              "prime_count": 7,
+              "sea_count": 895,
+              "side": "twist",
+              "smooth_bits": 54.42873554811721,
+              "smooth_part": 24248340734177625,
+              "surplus_gain_bits": 7.8282257901386245
+            },
+            {
+              "new_lcm_bits": 671.8552557595676,
+              "prime_count": 6,
+              "sea_count": 916,
+              "side": "twist",
+              "smooth_bits": 58.206027759460866,
+              "smooth_part": 332475987071297305,
+              "surplus_gain_bits": 13.19048050220352
+            },
+            {
+              "new_lcm_bits": 716.1418817450306,
+              "prime_count": 6,
+              "sea_count": 985,
+              "side": "curve",
+              "smooth_bits": 48.09398090752057,
+              "smooth_part": 300421398894946,
+              "surplus_gain_bits": 1.5930068230928853
+            },
+            {
+              "new_lcm_bits": 759.5205656910005,
+              "prime_count": 5,
+              "sea_count": 1135,
+              "side": "curve",
+              "smooth_bits": 44.96364644669103,
+              "smooth_part": 34308860563893,
+              "surplus_gain_bits": 0.6850647835998487
+            },
+            {
+              "new_lcm_bits": 802.2396391606145,
+              "prime_count": 6,
+              "sea_count": 1306,
+              "side": "curve",
+              "smooth_bits": 49.36292965938882,
+              "smooth_part": 723973219206800,
+              "surplus_gain_bits": 0.02545430724399722
+            },
+            {
+              "new_lcm_bits": 848.7276639443085,
+              "prime_count": 8,
+              "sea_count": 1444,
+              "side": "twist",
+              "smooth_bits": 67.4565467444367,
+              "smooth_part": 202508834412550926830,
+              "surplus_gain_bits": 3.794405621323911
+            },
+            {
+              "new_lcm_bits": 896.6002453491865,
+              "prime_count": 8,
+              "sea_count": 1486,
+              "side": "curve",
+              "smooth_bits": 55.779472000486464,
+              "smooth_part": 61843521954442320,
+              "surplus_gain_bits": 5.178962242507971
+            }
+          ],
+          "aggregate_components": 19,
+          "aggregate_hit_at": 1486,
+          "aggregate_lcm_bits": 896.6002453491865,
+          "aggregate_required_surplus_bits": 81.38723832474038,
+          "aggregate_surplus_bits": 85.42148126415555,
+          "best_smooth_bits": 67.4565467444367,
+          "elapsed_seconds": 0.032127708895131946,
+          "one_shot_bound_bits": 81.387238324742,
+          "one_shot_hit_at": null,
+          "repetition": 2,
+          "sea_counts": 1486,
+          "window_bits": 42.69361916237005
+        },
+        {
+          "accepted_candidates": [
+            {
+              "new_lcm_bits": 49.19832670296178,
+              "prime_count": 6,
+              "sea_count": 3,
+              "side": "twist",
+              "smooth_bits": 49.19832670296178,
+              "smooth_part": 645910097729487,
+              "surplus_gain_bits": 6.504707540591731
+            },
+            {
+              "new_lcm_bits": 99.1833946364258,
+              "prime_count": 7,
+              "sea_count": 14,
+              "side": "twist",
+              "smooth_bits": 51.57003043418518,
+              "smooth_part": 3342920419151988,
+              "surplus_gain_bits": 7.291448771093975
+            },
+            {
+              "new_lcm_bits": 150.6649950155187,
+              "prime_count": 5,
+              "sea_count": 17,
+              "side": "twist",
+              "smooth_bits": 51.481600379092896,
+              "smooth_part": 3144169415874221,
+              "surplus_gain_bits": 8.787981216722862
+            },
+            {
+              "new_lcm_bits": 194.59153050280494,
+              "prime_count": 6,
+              "sea_count": 110,
+              "side": "twist",
+              "smooth_bits": 47.73389040934385,
+              "smooth_part": 234063030094586,
+              "surplus_gain_bits": 1.2329163249161823
+            },
+            {
+              "new_lcm_bits": 237.4799353052707,
+              "prime_count": 5,
+              "sea_count": 138,
+              "side": "twist",
+              "smooth_bits": 42.88840480246576,
+              "smooth_part": 8141347864403,
+              "surplus_gain_bits": 0.1947856400956951
+            },
+            {
+              "new_lcm_bits": 280.9366769470439,
+              "prime_count": 9,
+              "sea_count": 224,
+              "side": "twist",
+              "smooth_bits": 65.4002802296792,
+              "smooth_part": 48690706250895652218,
+              "surplus_gain_bits": 0.7631224794031723
+            },
+            {
+              "new_lcm_bits": 329.44789013761294,
+              "prime_count": 6,
+              "sea_count": 230,
+              "side": "twist",
+              "smooth_bits": 49.511213190569,
+              "smooth_part": 802343413994314,
+              "surplus_gain_bits": 5.8175940281989895
+            },
+            {
+              "new_lcm_bits": 376.51382246070403,
+              "prime_count": 4,
+              "sea_count": 344,
+              "side": "twist",
+              "smooth_bits": 47.06593232309112,
+              "smooth_part": 147318538986247,
+              "surplus_gain_bits": 4.372313160721042
+            },
+            {
+              "new_lcm_bits": 425.5543382195988,
+              "prime_count": 8,
+              "sea_count": 471,
+              "side": "twist",
+              "smooth_bits": 60.26149860997649,
+              "smooth_part": 1382033802176421317,
+              "surplus_gain_bits": 6.346896596524694
+            },
+            {
+              "new_lcm_bits": 471.8001134146979,
+              "prime_count": 6,
+              "sea_count": 508,
+              "side": "twist",
+              "smooth_bits": 52.753569835297796,
+              "smooth_part": 7592886338705759,
+              "surplus_gain_bits": 3.5521560327290516
+            },
+            {
+              "new_lcm_bits": 516.9387253750416,
+              "prime_count": 5,
+              "sea_count": 788,
+              "side": "curve",
+              "smooth_bits": 46.723574461064885,
+              "smooth_part": 116197669402695,
+              "surplus_gain_bits": 2.4449927979736756
+            },
+            {
+              "new_lcm_bits": 561.7365279448939,
+              "prime_count": 7,
+              "sea_count": 875,
+              "side": "twist",
+              "smooth_bits": 58.50386683718719,
+              "smooth_part": 408713309356410188,
+              "surplus_gain_bits": 2.1041834074822034
+            },
+            {
+              "new_lcm_bits": 605.9243176725232,
+              "prime_count": 5,
+              "sea_count": 1192,
+              "side": "curve",
+              "smooth_bits": 45.77275222835051,
+              "smooth_part": 60113415581529,
+              "surplus_gain_bits": 1.4941705652593171
+            },
+            {
+              "new_lcm_bits": 668.8421387505347,
+              "prime_count": 7,
+              "sea_count": 1315,
+              "side": "twist",
+              "smooth_bits": 67.44138303406854,
+              "smooth_part": 200391475170214243607,
+              "surplus_gain_bits": 20.22420191564141
+            },
+            {
+              "new_lcm_bits": 728.1361100521452,
+              "prime_count": 9,
+              "sea_count": 1584,
+              "side": "curve",
+              "smooth_bits": 65.20086189721903,
+              "smooth_part": 42404815132805486280,
+              "surplus_gain_bits": 16.600352139240506
+            }
+          ],
+          "aggregate_components": 15,
+          "aggregate_hit_at": 1584,
+          "aggregate_lcm_bits": 728.1361100521452,
+          "aggregate_required_surplus_bits": 81.38723832474038,
+          "aggregate_surplus_bits": 87.73182261659451,
+          "best_smooth_bits": 67.44138303406854,
+          "elapsed_seconds": 0.04184108297340572,
+          "one_shot_bound_bits": 81.387238324742,
+          "one_shot_hit_at": null,
+          "repetition": 3,
+          "sea_counts": 1584,
+          "window_bits": 42.69361916237005
+        },
+        {
+          "accepted_candidates": [
+            {
+              "new_lcm_bits": 49.613226731102756,
+              "prime_count": 5,
+              "sea_count": 18,
+              "side": "curve",
+              "smooth_bits": 49.613226731102756,
+              "smooth_part": 861131404471603,
+              "surplus_gain_bits": 6.919607568732708
+            },
+            {
+              "new_lcm_bits": 99.40761750767776,
+              "prime_count": 7,
+              "sea_count": 52,
+              "side": "twist",
+              "smooth_bits": 49.794390776575,
+              "smooth_part": 976349345716896,
+              "surplus_gain_bits": 7.100771614204952
+            },
+            {
+              "new_lcm_bits": 142.29224819577104,
+              "prime_count": 4,
+              "sea_count": 90,
+              "side": "twist",
+              "smooth_bits": 44.469593188814436,
+              "smooth_part": 24360233387073,
+              "surplus_gain_bits": 0.19101152572323343
+            },
+            {
+              "new_lcm_bits": 188.10968753273488,
+              "prime_count": 7,
+              "sea_count": 118,
+              "side": "curve",
+              "smooth_bits": 50.77163564735072,
+              "smooth_part": 1922141072133659,
+              "surplus_gain_bits": 3.1238201745937957
+            },
+            {
+              "new_lcm_bits": 232.96307882427294,
+              "prime_count": 5,
+              "sea_count": 167,
+              "side": "curve",
+              "smooth_bits": 46.43835379225921,
+              "smooth_part": 95353676097003,
+              "surplus_gain_bits": 2.1597721291680116
+            },
+            {
+              "new_lcm_bits": 282.96029150423084,
+              "prime_count": 6,
+              "sea_count": 188,
+              "side": "twist",
+              "smooth_bits": 53.99721267995789,
+              "smooth_part": 17979627876364592,
+              "surplus_gain_bits": 7.303593517587849
+            },
+            {
+              "new_lcm_bits": 331.74485114361534,
+              "prime_count": 7,
+              "sea_count": 279,
+              "side": "curve",
+              "smooth_bits": 51.7845596393845,
+              "smooth_part": 3878874815864488,
+              "surplus_gain_bits": 6.090940477014449
+            },
+            {
+              "new_lcm_bits": 374.4588246487662,
+              "prime_count": 6,
+              "sea_count": 286,
+              "side": "twist",
+              "smooth_bits": 47.17340512378817,
+              "smooth_part": 158712064119158,
+              "surplus_gain_bits": 0.02035434278082704
+            },
+            {
+              "new_lcm_bits": 428.4829057542809,
+              "prime_count": 6,
+              "sea_count": 360,
+              "side": "twist",
+              "smooth_bits": 59.02408110551472,
+              "smooth_part": 586163645144990752,
+              "surplus_gain_bits": 11.330461943144662
+            },
+            {
+              "new_lcm_bits": 472.7137218045237,
+              "prime_count": 6,
+              "sea_count": 500,
+              "side": "curve",
+              "smooth_bits": 45.815778550963906,
+              "smooth_part": 61933214057235,
+              "surplus_gain_bits": 1.5371968878727174
+            },
+            {
+              "new_lcm_bits": 519.9615822677288,
+              "prime_count": 7,
+              "sea_count": 685,
+              "side": "twist",
+              "smooth_bits": 53.05521538526274,
+              "smooth_part": 9358608017815448,
+              "surplus_gain_bits": 4.554241300835038
+            },
+            {
+              "new_lcm_bits": 576.2759416574274,
+              "prime_count": 7,
+              "sea_count": 694,
+              "side": "curve",
+              "smooth_bits": 59.12171431175622,
+              "smooth_part": 627204842703595709,
+              "surplus_gain_bits": 13.620740227328618
+            },
+            {
+              "new_lcm_bits": 637.0841169308395,
+              "prime_count": 7,
+              "sea_count": 775,
+              "side": "twist",
+              "smooth_bits": 65.33173722946913,
+              "smooth_part": 46431485122824479507,
+              "surplus_gain_bits": 18.114556111042027
+            }
+          ],
+          "aggregate_components": 13,
+          "aggregate_hit_at": 775,
+          "aggregate_lcm_bits": 637.0841169308395,
+          "aggregate_required_surplus_bits": 81.38723832474038,
+          "aggregate_surplus_bits": 82.06706782002891,
+          "best_smooth_bits": 65.33173722946913,
+          "elapsed_seconds": 0.021042208187282085,
+          "one_shot_bound_bits": 81.387238324742,
+          "one_shot_hit_at": null,
+          "repetition": 4,
+          "sea_counts": 775,
+          "window_bits": 42.69361916237005
+        }
+      ],
+      "target": {
+        "bitlength": 163,
+        "exponent": 49,
+        "gap": 9,
+        "p": 10000000000000000000000000000000000000000000000009,
+        "smooth_prime_count": 2915,
+        "smoothness_bound": 26569
+      }
+    }
+  ]
+}
