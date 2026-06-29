@@ -222,7 +222,7 @@ artifact: artifacts/search_aggregate_oneshot_10e30_seed20260816.json
 order bits = 32.54, 31.97, 43.19
 one-shot bound = 49.83 bits
 
-artifact: artifacts/search_aggregate_oneshot_10e49_seed20260816.json
+artifact: aggregate_hasse_p49/search_aggregate_oneshot_10e49_seed20260816.json
 10^49 + 9: verified in 256 curves, 5 accepted points, 97.23 seconds
 order bits = 68.21, 45.09, 49.97, 48.80, 48.66
 one-shot bound = 81.39 bits
