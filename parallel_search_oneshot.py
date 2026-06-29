@@ -192,6 +192,15 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         help="worker progress interval in seconds; 0 disables time reports (default: 10)",
     )
     parser.add_argument(
+        "--console-report-seconds",
+        type=float,
+        default=300.0,
+        help=(
+            "parent console progress interval in seconds; JSONL still records every "
+            "worker progress event, and 0 disables console progress (default: 300)"
+        ),
+    )
+    parser.add_argument(
         "--stack-mb",
         type=positive_int,
         default=256,
@@ -243,6 +252,8 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         parser.error("exponent 0 targets p <= 3, which cannot have this certificate form")
     if args.report_seconds < 0:
         parser.error("--report-seconds must be nonnegative")
+    if args.console_report_seconds < 0:
+        parser.error("--console-report-seconds must be nonnegative")
     if args.start_method not in mp.get_all_start_methods():
         parser.error(f"--start-method {args.start_method!r} is not available on this platform")
     return args
@@ -514,7 +525,11 @@ def format_target(target: Target) -> List[str]:
     return lines
 
 
-def shutdown_workers(processes: Dict[int, mp.Process], stop_event: mp.Event, timeout: float) -> None:
+def shutdown_workers(
+    processes: Dict[int, mp.Process],
+    stop_event: mp.Event,
+    timeout: float,
+) -> Dict[int, Optional[int]]:
     stop_event.set()
     for proc in processes.values():
         proc.join(timeout)
@@ -522,7 +537,17 @@ def shutdown_workers(processes: Dict[int, mp.Process], stop_event: mp.Event, tim
         if proc.is_alive():
             proc.terminate()
     for proc in processes.values():
-        proc.join()
+        proc.join(timeout)
+    for proc in processes.values():
+        if proc.is_alive():
+            proc.kill()
+    for proc in processes.values():
+        proc.join(timeout)
+    return {
+        worker_id: proc.pid
+        for worker_id, proc in processes.items()
+        if proc.is_alive()
+    }
 
 
 def print_aggregate(
@@ -542,6 +567,24 @@ def print_aggregate(
         f"stage {format_stage_stats(sum_stage_stats(worker_stats))}",
         flush=True,
     )
+
+
+def maybe_print_aggregate(
+    worker_curves: Dict[int, int],
+    worker_stats: Dict[int, Dict[str, int]],
+    started_workers: int,
+    total_workers: int,
+    run_start: float,
+    last_print: float,
+    interval: float,
+) -> float:
+    if interval <= 0:
+        return last_print
+    now = perf_counter()
+    if now - last_print >= interval:
+        print_aggregate(worker_curves, worker_stats, started_workers, total_workers, run_start)
+        return now
+    return last_print
 
 
 def write_certificate(path: Path, cert: Tuple[int, int, int, int]) -> None:
@@ -567,6 +610,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
         print(f"workers = {args.workers}", flush=True)
         print(f"batch_size = {args.batch_size}", flush=True)
         print(f"base_seed = {base_seed}", flush=True)
+        print(f"console_report_seconds = {args.console_report_seconds:g}", flush=True)
         if args.log_file is not None:
             print(f"log_file = {args.log_file}", flush=True)
         if args.result_file is not None:
@@ -579,6 +623,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                 "target": target.__dict__,
                 "workers": args.workers,
                 "batch_size": args.batch_size,
+                "console_report_seconds": args.console_report_seconds,
                 "base_seed": base_seed,
                 "worker_seeds": seeds,
                 "pari_threads": args.pari_threads,
@@ -625,6 +670,7 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
         errors: List[Dict[str, Any]] = []
         started_workers = 0
         verified_cert: Optional[Tuple[int, int, int, int]] = None
+        last_aggregate_print = run_start - args.console_report_seconds
 
         try:
             while len(finished_workers) < len(processes) and verified_cert is None:
@@ -665,7 +711,15 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
                 elif event_type == "progress":
                     worker_curves[worker_id] = int(event["curves"])
                     worker_stats[worker_id] = normalize_stage_stats(event.get("stats"))
-                    print_aggregate(worker_curves, worker_stats, started_workers, args.workers, run_start)
+                    last_aggregate_print = maybe_print_aggregate(
+                        worker_curves,
+                        worker_stats,
+                        started_workers,
+                        args.workers,
+                        run_start,
+                        last_aggregate_print,
+                        args.console_report_seconds,
+                    )
                 elif event_type == "candidate":
                     worker_curves[worker_id] = int(event["curves"])
                     worker_stats[worker_id] = normalize_stage_stats(event.get("stats"))
@@ -716,10 +770,16 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
         except KeyboardInterrupt:
             print("interrupted; stopping workers", file=sys.stderr, flush=True)
             write_event(log_file, {"type": "interrupted"})
-            shutdown_workers(processes, stop_event, args.stop_timeout)
+            stragglers = shutdown_workers(processes, stop_event, args.stop_timeout)
+            if stragglers:
+                write_event(log_file, {"type": "shutdown_stragglers", "workers": stragglers})
+                print(f"workers still alive after shutdown: {stragglers}", file=sys.stderr, flush=True)
             return 130
 
-        shutdown_workers(processes, stop_event, args.stop_timeout)
+        stragglers = shutdown_workers(processes, stop_event, args.stop_timeout)
+        if stragglers:
+            write_event(log_file, {"type": "shutdown_stragglers", "workers": stragglers})
+            print(f"workers still alive after shutdown: {stragglers}", file=sys.stderr, flush=True)
 
         if verified_cert is not None:
             write_event(
