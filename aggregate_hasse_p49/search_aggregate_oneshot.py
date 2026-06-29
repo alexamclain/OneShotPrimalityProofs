@@ -13,10 +13,15 @@ import argparse
 import json
 import math
 import random
+import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from time import perf_counter
 from typing import Iterable, Optional, Sequence
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from cypari2 import Pari
 

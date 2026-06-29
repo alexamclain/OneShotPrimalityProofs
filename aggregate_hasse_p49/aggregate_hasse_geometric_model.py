@@ -13,16 +13,20 @@ import argparse
 import json
 import math
 import random
+import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from time import perf_counter
 from typing import Iterable, Optional, Sequence
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from cypari2 import Pari
 
 from aggregate_hasse_certificate_model import aggregate_window, lcm_bits_from_exponents, update_lcm_exponents
 from cm_search_oneshot import resolve_target
-from mixed_prime_lift import positive_int
 from smooth_tail_estimate import one_shot_bound, primes_upto
 
 
@@ -57,6 +61,13 @@ def nonnegative_int(value: str) -> int:
     out = int(value, 0)
     if out < 0:
         raise argparse.ArgumentTypeError("must be nonnegative")
+    return out
+
+
+def positive_int(value: str) -> int:
+    out = int(value, 0)
+    if out <= 0:
+        raise argparse.ArgumentTypeError("must be positive")
     return out
 
 

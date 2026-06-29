@@ -23,7 +23,8 @@ integer near `p`, the `n^2`-smooth part has mean only about 14-16 bits in the
 current challenge range.  The one-shot lower bound is about half the bitlength
 of `p`.
 
-The saddlepoint estimator in `smooth_tail_estimate.py` gives:
+The saddlepoint estimator in `aggregate_hasse_p49/smooth_tail_estimate.py`
+gives:
 
 ```text
 10^47 target: random-trial expectation about 10^5.2 curves
@@ -171,13 +172,15 @@ itself.  The deterministic proof is the actual integer interval intersection:
 intersect the windows for `x = q + 1` over
 `3 <= x <= floor(sqrt(n)) + 1`; if the intersection is empty, then no
 `q <= sqrt(n)` can divide `n`.  This verifier is now implemented in
-`aggregate_residue_intersection.py` and wired into `vaggregate.py`.  The
+`aggregate_hasse_p49/aggregate_residue_intersection.py` and wired into
+`aggregate_hasse_p49/vaggregate.py`.  The
 interval enumerator is deliberately capped, because unlucky or over-broad
 cryptographic-size intersections can otherwise materialize millions of Python
 intervals; an interval explosion is treated as a failed proof attempt, not as a
 reason to keep allocating memory.
 
-The exact-Hasse simulation in `aggregate_hasse_certificate_model.py` uses random
+The exact-Hasse simulation in
+`aggregate_hasse_p49/aggregate_hasse_certificate_model.py` uses random
 Hasse-window orders and greedily adds a component only when its new lcm bits
 beat the `log2(W)` tax.  At `10^48`:
 
@@ -190,7 +193,8 @@ median components = 14
 one-shot hits in same streams = 1/20
 ```
 
-A vectorized geometric-valuation model in `aggregate_hasse_numpy_model.py`
+A vectorized geometric-valuation model in
+`aggregate_hasse_p49/aggregate_hasse_numpy_model.py`
 matches the `10^48` scale and gives the first encouraging `10^80` estimate:
 
 ```text
@@ -212,12 +216,12 @@ the Hasse-window tax.
 Actual end-to-end searches now confirm that this is more than a scoring model:
 
 ```text
-artifact: artifacts/search_aggregate_oneshot_10e20_seed20260816.json
+artifact: aggregate_hasse_p49/search_aggregate_oneshot_10e20_seed20260816.json
 10^20 + 39: verified in 6 curves, 2 points
 order bits = 30.50, 22.56
 one-shot bound = 33.22 bits
 
-artifact: artifacts/search_aggregate_oneshot_10e30_seed20260816.json
+artifact: aggregate_hasse_p49/search_aggregate_oneshot_10e30_seed20260816.json
 10^30 + 57: verified in 23 curves, 3 points, 8.28 seconds
 order bits = 32.54, 31.97, 43.19
 one-shot bound = 49.83 bits
@@ -238,7 +242,8 @@ deterministic interval counts go
 48.66 bits -> 0 intervals, proof complete
 ```
 
-The four-point minimized certificate verifies independently with `vaggregate`.
+The four-point minimized certificate verifies independently with
+`aggregate_hasse_p49/vaggregate.py`.
 Every point order is far below the `81.39`-bit one-shot threshold, so this is a
 genuine aggregate certificate rather than a disguised one-shot success.
 

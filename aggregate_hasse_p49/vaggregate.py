@@ -16,7 +16,12 @@ from __future__ import annotations
 
 import sys
 from math import gcd, isqrt
+from pathlib import Path
 from typing import Sequence
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from aggregate_residue_intersection import run_intersection
 from voneshot import check_orders, is_smooth, ladder, prime_divisors, sieve_primes

@@ -25,15 +25,26 @@ empty intersection for every possible divisor `q <= sqrt(p)`.
 - `search_aggregate_oneshot_10e49_seed20260816.json`: original search artifact
   with five accepted points; the smallest one is redundant in the minimized
   certificate.
+- `search_aggregate_oneshot_10e20_seed20260816.json` and
+  `search_aggregate_oneshot_10e30_seed20260816.json`: small-range calibration
+  runs for the same aggregate method.
 - `aggregate_hasse_numpy_10e49_s200k_r5_seed20260815.json`: lightweight
   geometric model panel at the same range.
+- `scaling_method.md`: note summarizing the method and scaling evidence.
 - `verify_p49.py`: one-command verifier/summary wrapper for this packet.
 
-The verifier code lives at the repository root:
+The aggregate verifier/search/model scripts are included in this directory:
 
-- `../vaggregate.py`
-- `../aggregate_residue_intersection.py`
-- `../search_aggregate_oneshot.py`
+- `vaggregate.py`
+- `aggregate_residue_intersection.py`
+- `search_aggregate_oneshot.py`
+- `aggregate_hasse_certificate_model.py`
+- `aggregate_hasse_geometric_model.py`
+- `aggregate_hasse_numpy_model.py`
+- `smooth_tail_estimate.py`
+
+They use the baseline repository helpers `voneshot.py` and
+`cm_search_oneshot.py` from the root.
 
 ## Verification
 
@@ -52,7 +63,8 @@ intersection_empty = True
 
 ## Search result
 
-The actual search run used `search_aggregate_oneshot.py` with seed `20260816`:
+The actual search run used `aggregate_hasse_p49/search_aggregate_oneshot.py`
+with seed `20260816`:
 
 ```text
 curves tested       = 256

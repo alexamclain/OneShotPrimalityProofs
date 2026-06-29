@@ -9,7 +9,7 @@ that no small divisor of n lies in the surviving modular-window intersection.
 Run with the bundled runtime if the default Python lacks NumPy:
 
     /Users/agent/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 \
-      aggregate_hasse_numpy_model.py 80
+      aggregate_hasse_p49/aggregate_hasse_numpy_model.py 80
 """
 
 from __future__ import annotations
@@ -17,10 +17,15 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from time import perf_counter
 from typing import Iterable, Optional
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 import numpy as np
 
