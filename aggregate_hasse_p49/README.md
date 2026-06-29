@@ -30,6 +30,8 @@ empty intersection for every possible divisor `q <= sqrt(p)`.
   runs for the same aggregate method.
 - `aggregate_hasse_numpy_10e49_s200k_r5_seed20260815.json`: lightweight
   geometric model panel at the same range.
+- `research_overview.md`: short reviewer-facing map of explored search
+  directions and negative results.
 - `scaling_method.md`: note summarizing the method and scaling evidence.
 - `verify_p49.py`: one-command verifier/summary wrapper for this packet.
 
