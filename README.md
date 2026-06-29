@@ -15,7 +15,7 @@ This repository contains the following resources:
 - oneshot12prefixes.txt contins the 996,994 prefixes of one-shot ECPPs $(p,A)$ with $p\le 2^{12}$.
 - oneshot24.txt contains one-shot ECPPs for each of the 1,077,869 primes $3<p<2^{24}$.
 - oneshot.gp is a GP script that uses a brute-force random search to find one-shot ECPPs, testing each random curve and its quadratic twist from a single point count.
-- cm_search_oneshot.py is an experimental CM-construction search that tries to avoid random point counting by finding a smooth-rich CM trace first, constructing curves from Hilbert class polynomial roots, and then verifying any certificate it extracts.
+- cm_search_oneshot.py is an experimental CM-construction search that tries to avoid random point counting by finding a smooth-rich CM trace first, constructing curves from Hilbert class polynomial roots (via PARI or Magma), and then verifying any certificate it extracts.
 
 **Challenge**
 Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing values of $n$.  Can you extend this list?

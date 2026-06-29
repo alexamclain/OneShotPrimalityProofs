@@ -13,7 +13,11 @@ from __future__ import annotations
 
 import argparse
 import math
+import os
+import shutil
+import subprocess
 import sys
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from time import perf_counter
@@ -22,6 +26,9 @@ from typing import Iterable, Iterator, List, Optional, Set, Tuple
 from cypari2 import Pari
 
 from voneshot import verify
+
+
+LOCAL_T24_MAGMA_PATH = Path.home() / "Documents/Codex/t24-search/private/magma-local/install/magma"
 
 
 @dataclass(frozen=True)
@@ -95,6 +102,23 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
         help="optional PARI random seed for reproducible point extraction",
     )
     parser.add_argument(
+        "--cm-backend",
+        choices=("auto", "pari", "magma"),
+        default="auto",
+        help="backend for Hilbert class polynomial roots (default: auto)",
+    )
+    parser.add_argument(
+        "--magma-cmd",
+        type=Path,
+        help="Magma executable or wrapper to use with --cm-backend magma/auto; can also be set with MAGMA",
+    )
+    parser.add_argument(
+        "--magma-timeout",
+        type=positive_int,
+        default=300,
+        help="seconds to allow each Magma class-polynomial root computation (default: 300)",
+    )
+    parser.add_argument(
         "--result-file",
         type=Path,
         help="optional file to overwrite with the first verified certificate line",
@@ -111,6 +135,20 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
     if args.exponent == 0:
         parser.error("exponent 0 targets p <= 3, which cannot have this certificate form")
     return args
+
+
+def resolve_magma_cmd(args: argparse.Namespace) -> Optional[Path]:
+    if args.magma_cmd is not None:
+        return args.magma_cmd
+    path = shutil.which("magma")
+    if path is not None:
+        return Path(path)
+    env_path = os.environ.get("MAGMA")
+    if env_path:
+        return Path(env_path)
+    if LOCAL_T24_MAGMA_PATH.exists():
+        return LOCAL_T24_MAGMA_PATH
+    return None
 
 
 def scbound(p: int) -> int:
@@ -361,11 +399,81 @@ def montgomery_coefficients(pari: Pari, p: int, j: int) -> Iterator[int]:
             yield A
 
 
+def pari_cm_roots(pari: Pari, p: int, d: int) -> List[int]:
+    roots = pari(f"polrootsmod(polclass(-{d}), {p})")
+    return [int(root) % p for root in roots]
+
+
+def magma_cm_roots(magma_cmd: Path, p: int, d: int, timeout: int) -> List[int]:
+    script = f"""\
+SetColumns(0);
+P<x> := PolynomialRing(Integers());
+Fp := GF({p});
+R<X> := PolynomialRing(Fp);
+f := R!HilbertClassPolynomial(-{d});
+roots := Roots(f);
+for root in roots do
+    printf "CMROOT %o\\n", Integers()!root[1];
+end for;
+quit;
+"""
+    with tempfile.NamedTemporaryFile("w", suffix=".m", delete=False, encoding="utf-8") as handle:
+        handle.write(script)
+        script_path = Path(handle.name)
+    try:
+        result = subprocess.run(
+            [str(magma_cmd), str(script_path)],
+            text=True,
+            capture_output=True,
+            timeout=timeout,
+            check=False,
+        )
+    finally:
+        try:
+            script_path.unlink()
+        except FileNotFoundError:
+            pass
+
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"Magma exited with {result.returncode}: "
+            f"{(result.stderr or result.stdout).strip()[-1000:]}"
+        )
+
+    roots: List[int] = []
+    for line in result.stdout.splitlines():
+        if not line.startswith("CMROOT "):
+            continue
+        roots.append(int(line.split()[1]) % p)
+    return roots
+
+
+def cm_roots(
+    pari: Pari,
+    target: Target,
+    d: int,
+    backend: str,
+    magma_cmd: Optional[Path],
+    magma_timeout: int,
+) -> List[int]:
+    if backend in ("auto", "magma") and magma_cmd is not None:
+        try:
+            return magma_cm_roots(magma_cmd, target.p, d, magma_timeout)
+        except Exception as exc:
+            if backend == "magma":
+                raise
+            print(f"cm_magma_failed D=-{d} error={exc!r}; falling back to PARI", flush=True)
+    return pari_cm_roots(pari, target.p, d)
+
+
 def try_cm_discriminant(
     pari: Pari,
     target: Target,
     d: int,
     orders: List[SmoothOrder],
+    backend: str,
+    magma_cmd: Optional[Path],
+    magma_timeout: int,
 ) -> Optional[Tuple[int, int, int, int]]:
     if not orders:
         return None
@@ -381,13 +489,13 @@ def try_cm_discriminant(
     )
 
     try:
-        roots = pari(f"polrootsmod(polclass(-{d}), {target.p})")
+        roots = cm_roots(pari, target, d, backend, magma_cmd, magma_timeout)
     except Exception as exc:
-        print(f"cm_polclass_failed D=-{d} error={exc!r}", flush=True)
+        print(f"cm_roots_failed D=-{d} backend={backend} error={exc!r}", flush=True)
         return None
 
     for root in roots:
-        j = int(root) % target.p
+        j = root % target.p
         for A in montgomery_coefficients(pari, target.p, j):
             for order in orders:
                 for side in (1, -1):
@@ -430,6 +538,10 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     if args.seed is not None:
         pari(f"setrand({args.seed})")
     pari.read(str(root / "oneshot.gp"))
+    magma_cmd = resolve_magma_cmd(args)
+    if args.cm_backend == "magma" and magma_cmd is None:
+        print("error: --cm-backend magma requires --magma-cmd or a discoverable magma executable", file=sys.stderr)
+        return 2
 
     try:
         target = resolve_target(pari, args)
@@ -444,6 +556,9 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
     print(f"smoothness bound n^2 = {target.smoothness_bound}", flush=True)
     print(f"order lower bound = {target.order_lower_bound}", flush=True)
     print(f"max_discriminant = {args.max_discriminant}", flush=True)
+    print(f"cm_backend = {args.cm_backend}", flush=True)
+    if magma_cmd is not None and args.cm_backend in ("auto", "magma"):
+        print(f"magma_cmd = {magma_cmd}", flush=True)
 
     start = perf_counter()
     found = 0
@@ -462,7 +577,15 @@ def main(argv: Optional[Iterable[str]] = None) -> int:
             ]
             if orders:
                 smooth += 1
-                cert = try_cm_discriminant(pari, target, d, orders)
+                cert = try_cm_discriminant(
+                    pari,
+                    target,
+                    d,
+                    orders,
+                    args.cm_backend,
+                    magma_cmd,
+                    args.magma_timeout,
+                )
                 if cert is not None:
                     found += 1
                     print("certificate = " + " ".join(str(x) for x in cert), flush=True)
