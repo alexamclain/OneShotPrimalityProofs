@@ -206,6 +206,12 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 100000000000000000000000000000000000000000000000151 6437009016641369174910085274409395465870501856011 10538254878888005413405709303009388193264578918912 10329133743438851861485056 325151243
 ```
 </details>
+<details>
+<summary>$p=10^{51}+121$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a> with PARI seed 2031070117, using GPT-5 Codex (~33 CPU seconds to reproduce the winning seed).</summary>
+```
+1000000000000000000000000000000000000000000000000121 929729204722440022586893717956999583201547721462854 852931546149610240034551633260547527121659598818032 48961580129575478246279636 792317 214803473
+```
+</details>
 
 Contributors (both human and AI) are welcome to submit pull requests to this repo, provided they follow the guidelines below:
 - new entries should be the least prime greater than a power of 10 larger than any currently listed;
@@ -213,4 +219,3 @@ Contributors (both human and AI) are welcome to submit pull requests to this rep
 - specify the model (and effort level) of any LLM used;
 - give a rough estimate of the computational resources used (e.g. CPU/GPU minutes/hours);
 - provide a link to a GitHub repo with code that can be used to reproduce the example.
-
