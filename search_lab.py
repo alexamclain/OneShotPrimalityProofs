@@ -577,6 +577,20 @@ def calibrate(args: argparse.Namespace) -> int:
     return code
 
 
+def shard_hit_count(path: Path) -> int:
+    hits = set()
+    if not path.exists():
+        return 0
+    with path.open(encoding="utf-8") as handle:
+        for line in handle:
+            if not line.strip():
+                continue
+            event = json.loads(line)
+            if event.get("verified") or event.get("status") == "hit":
+                hits.add(event.get("run_id", path.stem))
+    return len(hits)
+
+
 def sweep(args: argparse.Namespace) -> int:
     run_dir = args.run_dir
     ledger = args.ledger or run_dir / "ledger.jsonl"
@@ -631,6 +645,8 @@ def sweep(args: argparse.Namespace) -> int:
 
     running: List[Dict[str, Any]] = []
     finished: List[Dict[str, Any]] = []
+    completed_hits = 0
+    stop_requested = False
     print(
         f"sweep_id={sweep_id} jobs={job_total} workers={args.workers} "
         f"curves_per_worker={args.curves_per_worker}",
@@ -638,7 +654,7 @@ def sweep(args: argparse.Namespace) -> int:
     )
 
     while pending or running:
-        while pending and len(running) < args.workers:
+        while pending and not stop_requested and len(running) < args.workers:
             job = pending.pop(0)
             log_handle = job["log"].open("w", encoding="utf-8")
             proc = subprocess.Popen(job["command"], stdout=log_handle, stderr=subprocess.STDOUT)
@@ -652,6 +668,13 @@ def sweep(args: argparse.Namespace) -> int:
         for job in list(running):
             proc = job["proc"]
             returncode = proc.poll()
+            if returncode is None and job.get("terminate_at") is not None:
+                if perf_counter() >= job["terminate_at"]:
+                    proc.kill()
+                    job["killed_after_hits"] = True
+                    job["terminate_at"] = None
+                    print(f"killed {job['run_id']} after stop-after-hits grace", flush=True)
+                continue
             if returncode is None:
                 continue
             any_finished = True
@@ -659,11 +682,23 @@ def sweep(args: argparse.Namespace) -> int:
             job["returncode"] = returncode
             job["wall_seconds"] = perf_counter() - job["started"]
             finished.append(job)
+            completed_hits += shard_hit_count(job["shard"])
             print(
                 f"finished {job['run_id']} returncode={returncode} "
                 f"wall_seconds={job['wall_seconds']:.1f}",
                 flush=True,
             )
+            if args.stop_after_hits and completed_hits >= args.stop_after_hits and not stop_requested:
+                stop_requested = True
+                pending.clear()
+                print(f"stop-after-hits reached: {completed_hits}", flush=True)
+                for active in running:
+                    active_proc = active["proc"]
+                    if active_proc.poll() is None:
+                        active["stopped_after_hits"] = True
+                        active["terminate_at"] = perf_counter() + args.terminate_grace_seconds
+                        active_proc.terminate()
+                        print(f"terminating {active['run_id']}", flush=True)
         if not any_finished and (pending or running):
             sleep(1.0)
 
@@ -675,7 +710,11 @@ def sweep(args: argparse.Namespace) -> int:
                 merged.write(shard.read_text(encoding="utf-8"))
 
     summarize(argparse.Namespace(run_dir=run_dir, ledger=ledger, out=args.summary_out))
-    failures = [job for job in finished if job.get("returncode") not in (0, None)]
+    failures = [
+        job
+        for job in finished
+        if job.get("returncode") not in (0, None) and not job.get("stopped_after_hits") and not job.get("killed_after_hits")
+    ]
     return 1 if failures else 0
 
 
@@ -733,6 +772,8 @@ def parse_args(argv: Optional[Iterable[str]] = None) -> argparse.Namespace:
     sw.add_argument("--sweep-id")
     sw.add_argument("--notes")
     sw.add_argument("--fail-on-no-hit", action="store_true")
+    sw.add_argument("--stop-after-hits", type=positive_int)
+    sw.add_argument("--terminate-grace-seconds", type=float, default=5.0)
 
     args = parser.parse_args(list(argv) if argv is not None else None)
     if args.command == "run" and (args.exponent is None) == (args.prime is None):

@@ -83,7 +83,8 @@ python3 search_lab.py sweep \
   --workers 10 \
   --jobs 10 \
   --curves-per-worker 25 \
-  --seed-start 2026075300
+  --seed-start 2026075300 \
+  --stop-after-hits 1
 ```
 
 Each worker runs an independent seed shard.  Shards are written to:
@@ -97,6 +98,11 @@ and merged into:
 ```text
 search_runs/ledger.jsonl
 ```
+
+When `--stop-after-hits N` is set, the sweep stops launching new shards and
+terminates remaining workers after completed shards contain `N` verified hits.
+Partial worker shards are still merged, so the ledger records the work already
+done before termination.
 
 Worker logs are kept under:
 
