@@ -183,6 +183,7 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 10000000000000000000000000000000000000000000121 8151755648368274577008537475923202273172438992 5510692970318980714549217757764134621563504704 128800712446011313424307 27967 166541 3506023
 ```
 </details>
+<details>
 <summary>$p=10^{47}+33$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a> (~107 CPU seconds).</summary>
 ```
 100000000000000000000000000000000000000000000033 55112216345782201038699272011159355107796454764 95436945926088979849959572902251388077592257351 324092508714303587772108 563117 8053139 17363201
@@ -210,6 +211,60 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 <summary>$p=10^{51}+121$,&nbsp; via <a href="https://github.com/AndrewVSutherland/OneShotPrimalityProofs/blob/main/oneshot.gp">oneshot.gp</a> with PARI seed 2031070117, using GPT-5 Codex (~33 CPU seconds to reproduce the winning seed).</summary>
 ```
 1000000000000000000000000000000000000000000000000121 929729204722440022586893717956999583201547721462854 852931546149610240034551633260547527121659598818032 48961580129575478246279636 792317 214803473
+```
+</details>
+<details>
+<summary>$p=10^{52}+327$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 20312701, using GPT-5 Codex high effort (~27 CPU seconds to find in calibration).</summary>
+```
+10000000000000000000000000000000000000000000000000327 7819922362141738790860795752243355235058320892089316 7677168746676345585034829879318762811857306212562145 403821991422963980467893787 965953 1628279 8738053
+```
+</details>
+<details>
+<summary>$p=10^{53}+171$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026080345, using GPT-5 Codex high effort (~13 CPU minutes in the sweep; winning seed reproduces in ~11 CPU seconds).</summary>
+```
+100000000000000000000000000000000000000000000000000171 5209047513295235928207653344096176850712215554033339 26735609868408159509019275983731797922094955767574809 368129996986311511658484088 1015409 16274579 773710699
+```
+</details>
+<details>
+<summary>$p=10^{54}+31$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026078427, using GPT-5 Codex high effort (~17 CPU minutes in the sweep; winning seed reproduces in ~56 CPU seconds).</summary>
+```
+1000000000000000000000000000000000000000000000000000031 344269491748775889097174968676778767687570533536808621 320634034569072401151840573556224629271347673429408057 1870155969699690579138787636 27742931 78229807
+```
+</details>
+<details>
+<summary>$p=10^{55}+21$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026083572, using GPT-5 Codex high effort (~19 CPU minutes in the sweep; winning seed reproduces in ~47 CPU seconds).</summary>
+```
+10000000000000000000000000000000000000000000000000000021 171926072097157976860182282325257011548183139472740755 2987699775192806589572591406777102628802697215074047698 6230254348515818315463167384 130191349 389098051
+```
+</details>
+<details>
+<summary>$p=10^{56}+3$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026084681, using GPT-5 Codex high effort (~13 CPU minutes in the sweep; winning seed reproduces in ~13 CPU seconds).</summary>
+```
+100000000000000000000000000000000000000000000000000000003 95552651697522473218970294613104323198831778271577913011 71924812754849414035373164820431902742815561608238648101 15869781255784280687605003324 523829 130103929 455366251
+```
+</details>
+<details>
+<summary>$p=10^{57}+279$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026081754, using GPT-5 Codex high effort (~19 CPU minutes in the sweep; winning seed reproduces in ~25 CPU seconds).</summary>
+```
+1000000000000000000000000000000000000000000000000000000279 430824429250832526992365190903862047421205801317081746246 233116881189951296502831037492997547567962330460372595349 50043216584833342784906043144 98377 29233747 195423689
+```
+</details>
+<details>
+<summary>$p=10^{58}+159$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026082863, using GPT-5 Codex high effort (~23 CPU minutes in the sweep; winning seed reproduces in ~46 CPU seconds).</summary>
+```
+10000000000000000000000000000000000000000000000000000000159 2281727843455138080267114137001835199896502300627223163552 508884327622375061523205498883859852798826790544257417171 111933175837800343548547824748 847681 1368401 181134341
+```
+</details>
+<details>
+<summary>$p=10^{59}+19$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026083972, using GPT-5 Codex high effort (~37 CPU minutes in the sweep; winning seed reproduces in ~98 CPU seconds).</summary>
+```
+100000000000000000000000000000000000000000000000000000000019 10051879614222555164401871746484919502901346940706414402939 93567331462763384667129620109456599796024293170358892128860 504610162012325876128702078008 3708791 54523519 81378971
+```
+</details>
+<details>
+<summary>$p=10^{60}+7$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026079027, using GPT-5 Codex high effort (~25 CPU minutes in the widened sweep; winning seed reproduces in ~41 CPU seconds).</summary>
+```
+1000000000000000000000000000000000000000000000000000000000007 471906142857897370628256623352865597231582219698155951859352 123536947612166753741815825478855499721942159274413535899324 1223917746835797194801250618176 52081 125387 301319 222464999
 ```
 </details>
 
