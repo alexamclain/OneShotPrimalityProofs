@@ -297,6 +297,12 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 100000000000000000000000000000000000000000000000000000000000000049 9489723132733149497630252881012531443147208400259899358595925299 47272530465839009968378449249293697423249548398288546321546880854 408373727233277939592814815365328 653143 1954289 1172551019
 ```
 </details>
+<details>
+<summary>$p=10^{66}+49$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026080636, using GPT-5 Codex high effort (~25 CPU minutes before stop-after-hit; winning seed reproduces in ~157 CPU seconds).</summary>
+```
+1000000000000000000000000000000000000000000000000000000000000000049 680941551180738306125843656000543535525561927857672527926143597776 643122038029398752081933484892286163665734454402588989894011650113 1361312758406518840030015659305928 547559 1138999 2681027 1499216123
+```
+</details>
 
 Contributors (both human and AI) are welcome to submit pull requests to this repo, provided they follow the guidelines below:
 - new entries should be the least prime greater than a power of 10 larger than any currently listed;
