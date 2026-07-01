@@ -339,6 +339,12 @@ Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing 
 1000000000000000000000000000000000000000000000000000000000000000000000039 298369531518639777035037322093522711946691660987814616604488929357201459 195733311453103323639889101128092044986438149388952116150344757838730836 8286613817274529235396718961147869571 17460217 100842383 2719971521 2822666257
 ```
 </details>
+<details>
+<summary>$p=10^{73}+79$,&nbsp; found by <a href="https://alexamclain.com/">Alexa McLain</a> via <a href="https://github.com/alexamclain/OneShotPrimalityProofs/blob/codex/ledger-search-lab/search_lab.py">search_lab.py</a> <code>two_sided_factor</code> with PARI seed 2026083354, using GPT-5 Codex high effort (~78 CPU minutes before stop-after-hit; winning seed reproduces in ~475 CPU seconds).</summary>
+```
+10000000000000000000000000000000000000000000000000000000000000000000000079 3629571014457520202712302992507525034865648247956933724727984763632832421 3724935890053439045817924532475961397094469485480247112607697058532774506 4025951649000038409419256886717068968 147919 19305821 29663401 143551789
+```
+</details>
 
 Contributors (both human and AI) are welcome to submit pull requests to this repo, provided they follow the guidelines below:
 - new entries should be the least prime greater than a power of 10 larger than any currently listed;
