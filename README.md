@@ -16,6 +16,8 @@ This repository contains the following resources:
 - oneshot12prefixes.txt lists the 1,068,923 unique prefixes $(p,A)$ among all one-shot ECPPs with $p\le 2^{12}$
 - oneshot.gp is a GP script that uses a brute-force random search to find one-shot ECPPs.
 
+This project is part of the DARPA expMath program.
+
 **Challenge**
 Below is a list of one-shot ECPPs for the least prime $p > 10^n$ for increasing values of $n$.  Can you extend this list?
 
